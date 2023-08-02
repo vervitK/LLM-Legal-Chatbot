@@ -296,7 +296,7 @@ button {
 /*--------------------------------------------------------------------- layout new css ---------------------------------------------------------------------*/
 
 .header {
-     background: #0c0f38;
+     background: #202020;
      width: 100%;
      padding: 40px 40px 40px 40px;
 }
@@ -310,7 +310,7 @@ button {
 }
 
 .banner_main {
-     background: #0c0f38;
+     background: #202020;
      background-size: 100% 100%;
      background-repeat: no-repeat;
      padding-bottom: 90px;
@@ -370,7 +370,7 @@ button {
 
 .titlepage h2 {
      font-size: 45px;
-     color: #0c0f38;
+     color: #202020;
      line-height: 40px;
      font-weight: bold;
      padding: 0;
@@ -392,7 +392,7 @@ button {
 }
 
 .web_hosting p {
-     color: #0c0f38;
+     color: #202020;
      font-size: 17px;
      line-height: 28px;
      padding: 40px 50px;
@@ -413,7 +413,7 @@ button {
 }
 
 .web_hosting a:hover {
-     background-color: #0c0f38;
+     background-color: #202020;
      color: #fff;
 }
 
@@ -426,7 +426,7 @@ button {
 .Services {
      margin-top: 90px;
      padding: 60px 0;
-     background: #0c0f38;
+     background: #202020;
      font-family: Poppins;
 }
 
@@ -476,7 +476,7 @@ button {
 }
 
 .Services .Services-box:hover {
-     background: #5f5f5f;
+     background: #4f4f4f;
      transition: ease-in all 0.5s;
      cursor: pointer;
 }
@@ -502,7 +502,7 @@ button {
 }
 
 .read_more:hover {
-     background: #8308eb;
+     background: #5e5e5e;
      color: #fff;
 }
 
@@ -591,7 +591,7 @@ button {
 }
 
 .main_form {
-     background: #0c0f38;
+     background: #202020;
      padding: 55px 55px;
      border-radius: 30px;
      margin-bottom: -58%;
@@ -656,7 +656,7 @@ button {
 
 .footer {
      font-family: Poppins;
-     background: #0c0f38;
+     background: #202020;
 }
 
 .cont {
@@ -706,7 +706,7 @@ button {
 }
 
 .copyright a:hover {
-     color: #0c0f38;
+     color: #202020;
 }
 
 
