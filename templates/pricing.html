@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Legal Chatbot Pricing</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
+
+  <style>
+    body {
+      background: #111d27;
+      color: #111;
+      min-width: 320px;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -webkit-backface-visibility: hidden;
+      position: relative;
+      padding: 50px 20px;
+    }
+
+    .pricing {
+      text-align: center;
+      border: 1px solid #f0f0f0;
+      color: #777;
+      font-size: 14px;
+      padding-left: 0;
+      margin-bottom: 30px;
+      font-family: 'Lato';
+    }
+
+    .pricing img {
+      display: block;
+      margin: auto;
+      width: 32px;
+    }
+
+    .pricing li:first-child,
+    .pricing li:last-child {
+      padding: 20px 13px;
+    }
+
+    .pricing li {
+      list-style: none;
+      padding: 13px;
+    }
+
+    .pricing li + li {
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .pricing big {
+      font-size: 32px;
+    }
+
+    .pricing h3 {
+      margin-bottom: 0;
+      font-size: 36px;
+    }
+
+    .pricing span {
+      font-size: 12px;
+      color: #999;
+      font-weight: normal;
+    }
+
+    .pricing li:nth-last-child(2) {
+      padding: 30px 13px;
+    }
+
+    .pricing button {
+      width: auto;
+      margin: auto;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 50px;
+      color: #fff;
+      padding: 9px 24px;
+      background: #aaa;
+      opacity: 1;
+      transition: opacity .2s ease;
+      border: none;
+      outline: none;
+    }
+
+    .pricing button:hover {
+      opacity: .9;
+    }
+
+    .pricing button:active {
+      box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* pricing color */
+    .p-green big,
+    .p-green h3 {
+      color: #4c7737;
+    }
+
+    .p-green button {
+      background: #4c7737;
+    }
+
+    .p-yel big,
+    .p-yel h3 {
+      color: #ffbb42;
+    }
+
+    .p-yel button {
+      background: #ffbb42;
+    }
+
+    .p-red big,
+    .p-red h3 {
+      color: #e13c4c;
+    }
+
+    .p-red button {
+      background: #e13c4c;
+    }
+
+    .p-blue big,
+    .p-blue h3 {
+      color: #3f4bb8;
+    }
+
+    .p-blue button {
+      background: #3f4bb8;
+    }
+
+    /* Custom styles for alignment */
+    .pricing li {
+      text-align: center;
+    }
+
+    .pricing li:nth-child(3),
+    .pricing li:nth-child(4),
+    .pricing li:nth-child(5),
+    .pricing li:nth-child(6) {
+      padding-left: 0;
+    }
+
+    .pricing li:nth-child(7) {
+      padding-top: 10px;
+    }
+
+    .pricing button {
+      display: block;
+      margin: 15px auto;
+    }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <div class="row white">
+      <div class="block">
+
+        <!-- Personal Plan (Hobbyists) -->
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <ul class="pricing p-green">
+            <li>
+<!--              <img src="http://bread.pp.ua/n/settings_g.svg" alt="">-->
+              <big>Personal</big>
+            </li>
+            <li>A plan designed for individuals and hobbyists with basic legal needs.</li>
+            <li>Word Limit - 512</li>
+            <li>General legal information</li>
+            <li>Limited access to legal documents</li>
+            <li>Email support for inquiries</li>
+            <li>Ideal For: Individuals seeking basic legal guidance.</li>
+            <li>
+              <h3>Free</h3>
+              <span> </span>
+            </li>
+            <li>
+              <button>Join Now</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Professional Plan (Small Businesses) -->
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <ul class="pricing p-yel">
+            <li>
+<!--              <img src="http://bread.pp.ua/n/settings_y.svg" alt="">-->
+              <big>Professional</big>
+            </li>
+            <li>A plan tailored for small businesses and startups with regular legal requirements.</li>
+            <li>Word Limit - 1028</li>
+            <li>Comprehensive legal information</li>
+            <li>Access to legal documents</li>
+            <li>Chat and email support</li>
+            <li>Ideal For: Small businesses seeking cost-effective legal assistance.</li>
+            <li>
+              <h3>₹699</h3>
+              <span>per month</span>
+            </li>
+            <li>
+              <button>Join Now</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Enterprise Plan (Medium to Large Companies) -->
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <ul class="pricing p-red">
+            <li>
+<!--              <img src="http://bread.pp.ua/n/settings_r.svg" alt="">-->
+              <big>Enterprise</big>
+            </li>
+            <li>A premium plan for medium to large companies with complex legal needs.</li>
+            <li>Word Limit - 2048</li>
+            <li>Extensive legal database</li>
+            <li>Customizable legal documents</li>
+            <li>Priority chat and email support</li>
+            <li>Ideal For: Medium to large companies with complex legal needs.</li>
+            <li>
+              <h3>₹1499</h3>
+              <span>per month</span>
+            </li>
+            <li>
+              <button>Join Now</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Custom Plan (White-Label Solutions) -->
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <ul class="pricing p-blue">
+            <li>
+<!--              <img src="http://bread.pp.ua/n/settings_b.svg" alt="">-->
+              <big>Custom</big>
+            </li>
+            <li>A flexible and customizable plan for businesses.</li>
+            <li>No word Limit</li>
+            <li>Tailored legal content</li>
+            <li>Custom branding and integration</li>
+            <li>Advanced legal consultation</li>
+            <li>Ideal For: Law firms or businesses seeking legal chatbot solution.</li>
+            <li>
+              <h3>Contact us</h3>
+              <span>  </span>
+            </li>
+            <li>
+              <button>Contact Now</button>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /block -->
+    </div><!-- /row -->
+  </section>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
