@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
 
 urlpatterns =[
-    path(route='',view=views.home_page,name='index'),
+    path(route='',view=views.home_page),
     path(route='chatbot',view=views.chatbot,name='chatbot'),
     # path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     # path('accounts/login/', LoginView.as_view(), name='login'),
