@@ -15,20 +15,176 @@ from .models import Chat
 # openai_api_key ='openai_api_key'
 # openai.api_key = openai_api_key
 
+# def ask_openai(message):
+#     response = openai.ChatCompletion.create(
+#         model="gpt-3.5-turbo",
+#         messages=[
+#             {
+#                 'role': 'user',
+#                 'content': message
+#             }
+#         ],
+#         max_tokens=20,
+#         temperature=0.5
+#     )
+#     answer = response.choices[0].message.content.strip()
+#     return answer
+
+from pathlib import Path
+
+# Example: Trying different encodings
+encodings_to_try = ['utf-8']
+questions_dir = Path('home/ubuntu/project/chatbot/skyscanner')
+for file_path in questions_dir.glob('*.txt'):
+    for encoding in encodings_to_try:
+        try:
+            with file_path.open('r', encoding=encoding) as text_file:
+                content = text_file.read()
+                # Process the file content as needed
+                break  # Stop trying encodings if successful
+        except UnicodeDecodeError:
+            pass
+
+
+
+from pathlib import Path
+import torch
+from auto_gptq import AutoGPTQForCausalLM
+from langchain.chains import ConversationalRetrievalChain
+from langchain.chains.question_answering import load_qa_chain
+from langchain.document_loaders import DirectoryLoader
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.llms import HuggingFacePipeline
+from langchain.memory import ConversationBufferMemory
+from langchain.prompts import PromptTemplate
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+from transformers import AutoTokenizer, GenerationConfig, TextStreamer, pipeline
+from functools import lru_cache
+from functools import cached_property
+
+
+class Chatbot:
+
+    global DEVICE
+    global tokenizer
+    model_name_or_path = "TheBloke/Nous-Hermes-13B-GPTQ"
+    model_basename = "nous-hermes-13b-GPTQ-4bit-128g.no-act.order"
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
+
+
+    DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+    DEFAULT_TEMPLATE = """
+    ### Instruction: You're a lawyer support agent that is talking to a clients. Use only the chat history and the following information
+    {context}
+    to answer in a helpful manner to the question. If you don't know the answer - say that you don't know.
+    Keep your replies short, compassionate and informative.
+    {chat_history}
+    ### Input: {question}
+    ### Response:
+    """.strip()
+
+
+    def __init__(
+        self,
+        prompt_template: str = DEFAULT_TEMPLATE,
+        verbose: bool = False,):
+        self.prompt = PromptTemplate(input_variables=["context", "question", "chat_history"], template=prompt_template,)
+        self.documents_dir = "home/ubuntu/project/chatbot/skyscanner"
+        self.model_name_or_path = "TheBloke/Nous-Hermes-13B-GPTQ"
+
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name_or_path, use_fast=True)
+        self.text_pipeline = HuggingFacePipeline(
+            pipeline=pipeline(
+                "text-generation",
+                model=self.model,
+                tokenizer=self.tokenizer,
+                max_length=2048,
+                temperature=0,
+                top_p=0.95,
+                repetition_penalty=1.15,
+                generation_config=self.generation_config,
+                streamer=self.streamer,
+                batch_size=1,
+            )
+        )
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="embaas/sentence-transformers-multilingual-e5-base",
+            model_kwargs={"device": DEVICE},
+        )
+        self.chain = self._create_chain(self.text_pipeline, self.prompt, verbose)
+        self.db = self._embed_data(self.documents_dir, self.embeddings)
+        # self.DEVICE = self.
+
+    @cached_property
+    def tokenizer(self):
+        return AutoTokenizer.from_pretrained(self.model_name_or_path, use_fast=True)
+
+    @cached_property
+    def model(self):
+        return AutoGPTQForCausalLM.from_quantized(
+            self.model_name_or_path,
+            model_basename=self.model_basename,
+            use_safetensors=True,
+            trust_remote_code=True,
+            device=DEVICE,
+        )
+
+    @cached_property
+    def generation_config(self):
+        return GenerationConfig.from_pretrained(self.model_name_or_path)
+
+    @cached_property
+    def streamer(self):
+        return TextStreamer(
+            self.tokenizer, skip_prompt=True, skip_special_tokens=True, use_multiprocessing=False
+        )
+
+    def _create_chain(
+        self,
+        text_pipeline: HuggingFacePipeline,
+        prompt: PromptTemplate,
+        verbose: bool = False,
+    ):
+        memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            human_prefix="### Input",
+            ai_prefix="### Response",
+            input_key="question",
+            output_key="output_text",
+            return_messages=False,
+        )
+        return load_qa_chain(
+            text_pipeline,
+            chain_type="stuff",
+            prompt=prompt,
+            memory=memory,
+            verbose=verbose,
+        )
+
+    def _embed_data(self, documents_dir: Path, embeddings: HuggingFaceEmbeddings) -> Chroma:
+        loader = DirectoryLoader(documents_dir, glob="**/*txt")
+        documents = loader.load()
+        text_splitter = CharacterTextSplitter(chunk_size=512, chunk_overlap=0)
+        texts = text_splitter.split_documents(documents)
+        return Chroma.from_documents(texts, embeddings)
+
+    def __call__(self, user_input: str) -> str:
+        docs = self.db.similarity_search(user_input)
+        return self.chain.run({"input_documents": docs, "question": user_input})
+
+# Create an instance of Chatbot
+
+
+response_ai = Chatbot()
+
 def ask_openai(message):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {
-                'role': 'user',
-                'content': message
-            }
-        ],
-        max_tokens=20,
-        temperature=0.5
-    )
-    answer = response.choices[0].message.content.strip()
-    return answer
+    ans = response_ai('You: ' + message)
+    return ans
+
+
+
 
 # Create your views here.
 @login_required
