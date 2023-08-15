@@ -1,1 +1,1 @@
-web: gunicorn todo.wsgi
+web: gunicorn django_chatbot.wsgi
