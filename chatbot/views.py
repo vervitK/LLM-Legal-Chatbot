@@ -1,5 +1,4 @@
 from django.contrib import auth, messages
-# import openai
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -10,42 +9,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from .models import Chat
-
-# openai_api_key = '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'
-# openai_api_key ='openai_api_key'
-# openai.api_key = openai_api_key
-
-# def ask_openai(message):
-#     response = openai.ChatCompletion.create(
-#         model="gpt-3.5-turbo",
-#         messages=[
-#             {
-#                 'role': 'user',
-#                 'content': message
-#             }
-#         ],
-#         max_tokens=20,
-#         temperature=0.5
-#     )
-#     answer = response.choices[0].message.content.strip()
-#     return answer
-
 from pathlib import Path
-
-# Example: Trying different encodings
-encodings_to_try = ['utf-8']
-questions_dir = Path('home/ubuntu/project/chatbot/skyscanner')
-for file_path in questions_dir.glob('*.txt'):
-    for encoding in encodings_to_try:
-        try:
-            with file_path.open('r', encoding=encoding) as text_file:
-                content = text_file.read()
-                # Process the file content as needed
-                break  # Stop trying encodings if successful
-        except UnicodeDecodeError:
-            pass
-
-
 
 from pathlib import Path
 import torch
@@ -62,6 +26,23 @@ from langchain.vectorstores import Chroma
 from transformers import AutoTokenizer, GenerationConfig, TextStreamer, pipeline
 from functools import lru_cache
 from functools import cached_property
+
+
+# Example: Trying different encodings
+encodings_to_try = ['utf-8']
+questions_dir = Path('home/ubuntu/project/chatbot/skyscanner')
+for file_path in questions_dir.glob('*.txt'):
+    for encoding in encodings_to_try:
+        try:
+            with file_path.open('r', encoding=encoding) as text_file:
+                content = text_file.read()
+                # Process the file content as needed
+                break  # Stop trying encodings if successful
+        except UnicodeDecodeError:
+            pass
+
+
+
 
 
 class Chatbot:
